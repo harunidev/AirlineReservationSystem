@@ -1,0 +1,139 @@
+﻿@model ProjectFinal.Models.Flights
+
+@{
+    ViewBag.Title = "Flight Info";
+}
+
+<h1 class="page-title">Flight Information</h1>
+
+<div class="ticket-container">
+    <div class="image-container">
+        <img src="@Url.Content("~/Images/Cities/" + Model.F_Image)" alt="City Image" />
+    </div>
+
+    <div class="flight-details">
+        <p><strong>Plane Model:</strong> <span>@Model.Plane_model</span></p>
+        <p><strong>Destination:</strong> <span>@Model.Cities</span></p>
+        <p><strong>Class:</strong> <span>@Model.F_Class</span></p>
+        <p><strong>Passengers:</strong> <span>@Model.peoples</span></p>
+        <p><strong>Price:</strong> <span>$@Model.Price</span></p>
+        <p><strong>Date:</strong> <span>@Model.Schedule</span></p>
+
+        @if (Model.F_Available)
+        {
+            <p><strong>Status:</strong> <span style="color: green;">Available for Booking</span></p>
+
+            <!-- Reserve Now Form -->
+            <form action="@Url.Action("ReserveFlight", "Home")" method="post">
+                @* Hidden input to pass the flight ID *@
+                <input type="hidden" name="id" value="@Model.ID" />
+                <button type="submit" class="reserve-button">Reserve Now</button>
+            </form>
+        }
+        else
+        {
+            <p><strong>Status:</strong> <span style="color: red;">Not Available</span></p>
+        }
+    </div>
+</div>
+
+<div class="navigation-buttons">
+    <a href="@Url.Action("Flight_List", "Home")" class="nav-link">Back to Flights</a>
+    <a href="@Url.Action("Index", "Home")" class="nav-link">Home</a>
+</div>
+>
+
+
+
+<style>
+    body {
+        background-color: #f9f9f9;
+        font-family: 'Roboto', Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #0056b3;
+        margin: 20px 0;
+    }
+
+    .ticket-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .image-container img {
+        width: 500px;
+        height: 300px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .flight-details {
+        max-width: 400px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+    }
+
+        .flight-details p {
+            margin: 10px 0;
+            font-size: 1.1rem;
+        }
+
+            .flight-details p strong {
+                color: #0056b3;
+                font-weight: bold;
+            }
+
+        .flight-details span {
+            color: #333;
+            font-weight: normal;
+        }
+
+    .reserve-button {
+        display: block;
+        width: 100%;
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: background-color 0.3s;
+    }
+
+        .reserve-button:hover {
+            background-color: #003d80;
+        }
+
+    .navigation-buttons {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .nav-link {
+        display: inline-block;
+        color: #0056b3;
+        font-size: 1rem;
+        text-decoration: none;
+        margin: 0 10px;
+        transition: color 0.3s;
+    }
+
+        .nav-link:hover {
+            color: #003d80;
+            text-decoration: underline;
+        }
+</style>

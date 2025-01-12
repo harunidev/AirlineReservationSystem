@@ -1,0 +1,130 @@
+﻿@using ProjectFinal.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<main aria-labelledby="title" style="background-color: #333333; min-height: 100vh; padding: 2rem;">
+    <h2 id="title" class="text-center my-4">@ViewBag.Title</h2>
+    <div class="d-flex justify-content-center">
+        <form class="form" method="post" action="@Url.Action("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl })">
+            @Html.AntiForgeryToken()
+
+            <h4 class="text-center text-secondary">Use a local account to log in.</h4>
+            <hr />
+
+            <!-- Email Field -->
+            <span class="input-span">
+                @Html.LabelFor(m => m.Email, "Email", new { @class = "label" })
+                @Html.TextBoxFor(m => m.Email, new { @type = "email" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </span>
+
+            <!-- Password Field -->
+            <span class="input-span">
+                @Html.LabelFor(m => m.Password, "Password", new { @class = "label" })
+                @Html.PasswordFor(m => m.Password, new { @type = "password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+            </span>
+
+            <!-- Remember Me Checkbox -->
+            <div class="form-check mb-3">
+                @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input", id = "RememberMe" })
+                @Html.LabelFor(m => m.RememberMe, "Remember me", new { @class = "form-check-label" })
+            </div>
+
+            <!-- Submit Button -->
+            <input type="submit" value="Log in" class="submit" />
+
+            <!-- Forgot Password and Register Links -->
+            <span class="span d-block text-center mt-3">
+                <a href="@Url.Action("ForgotPassword", "Account")">Forgot password?</a>
+            </span>
+            <span class="span d-block text-center mt-2">
+                Don't have an account? <a href="@Url.Action("Register", "Account")">Sign up</a>
+            </span>
+        </form>
+    </div>
+</main>
+
+@section Styles {
+    <style>
+        .form {
+            --bg-light: #efefef;
+            --bg-dark: #707070;
+            --clr: #58bc82;
+            --clr-alpha: #9c9c9c60;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+            .form .input-span {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .form input[type="email"],
+            .form input[type="password"] {
+                border-radius: 0.5rem;
+                padding: 1rem 0.75rem;
+                width: 100%;
+                border: none;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                background-color: var(--clr-alpha);
+                outline: 2px solid var(--bg-dark);
+            }
+
+                .form input[type="email"]:focus,
+                .form input[type="password"]:focus {
+                    outline: 2px solid var(--clr);
+                }
+
+        .label {
+            align-self: flex-start;
+            color: var(--clr);
+            font-weight: 600;
+        }
+
+        .form .submit {
+            padding: 1rem 0.75rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-radius: 3rem;
+            background-color: var(--bg-dark);
+            color: var(--bg-light);
+            border: none;
+            cursor: pointer;
+            transition: all 300ms;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+            .form .submit:hover {
+                background-color: var(--clr);
+                color: var(--bg-dark);
+            }
+
+        .span {
+            text-decoration: none;
+            color: var(--bg-dark);
+        }
+
+            .span a {
+                color: var(--clr);
+            }
+    </style>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

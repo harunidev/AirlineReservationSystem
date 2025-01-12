@@ -1,0 +1,121 @@
+﻿<section class="banner_main bg-light text-center py-5">
+    <div class="container">
+        <h1>BOOK YOUR FLIGHT AND ENJOY THE COMFORT.</h1>
+        <span>
+            TAKE IT EASY.
+        </span>
+        <p>
+            We offer tailored travel solutions for your company and are happy to assist you with corporate flight reservation programs to meet your business needs.
+        </p>
+        <a href="@Url.Action("About", "Home")" class="btn btn-primary btn-lg mt-3">More Information</a>
+    </div>
+</section>
+
+<div class="car py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">BOOK A FLIGHT</h2>
+            <p class="text-muted">Here are the companies we travel with!</p>
+        </div>
+        <div class="row gy-4">
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <img src="~/images/emirates.jpg" class="card-img-top" alt="Emirates">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">EMIRATES</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <img src="~/images/Etihad-Airways (1).jpg" class="card-img-top" alt="Etihad">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">ETIHAD</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <img src="~/images/th.jpeg" class="card-img-top" alt="Turk Hava Yollari">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">TURK HAVA YOLLARI</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            @Html.ActionLink("All Flights", "Flight_List", "Home", null, new { @class = "btn btn-outline-primary btn-lg" })
+        </div>
+    </div>
+</div>
+
+<div id="contact" class="py-5 bg-secondary text-white">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Find Yourself a Reservation</h2>
+        </div>
+        <form class="row g-3">
+            <div class="col-md-4">
+                <select class="form-select" id="firmSelect">
+                    <option value="">Choose Firm to Fly With</option>
+                    <option value="Emirates">Emirates</option>
+                    <option value="Etihad Airlines">Etihad Airlines</option>
+                    <option value="Turkish Airlines">Turkish Airlines</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select" id="classSelect">
+                    <option value="">Business Class or Economy Class?</option>
+                    <option value="Business">Business Class</option>
+                    <option value="Economy">Economy Class</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select class="form-select" id="peopleSelect">
+                    <option value="">How Many People?</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="col-12 text-center mt-3">
+                <button type="button" class="btn btn-primary btn-lg" id="searchBtn">Find Best Option</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="flightResults" class="container mt-5">
+    <!-- Flight results will be loaded here -->
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#searchBtn').click(function () {
+            // Get filter values
+            const firm = $('#firmSelect').val();
+            const flightClass = $('#classSelect').val();
+            const people = $('#peopleSelect').val();
+
+            // Validate form fields
+            if (!firm || !flightClass || !people) {
+                alert("Please select all options to find the best flight.");
+                return;
+            }
+
+            // Load partial view with filtered data
+            $.ajax({
+                url: '@Url.Action("Flight_List_Data", "Home")',
+                type: 'GET',
+                data: { firm, flightClass, people },
+                success: function (result) {
+                    $('#flightResults').html(result);
+                },
+                error: function () {
+                    alert("An error occurred while fetching flight data.");
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,134 @@
+﻿@model ProjectFinal.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<main aria-labelledby="title">
+
+    <!-- Styled registration form -->
+    <form id="registerForm" class="form" action="@Url.Action("Register", "Account")" method="post">
+        @Html.AntiForgeryToken()
+
+        <p class="message">Signup now to access more features!</p>
+
+        <label class="input-container">
+            <input id="email" class="input" type="email" name="Email" required />
+            <span>Email</span>
+            <span id="emailError" class="text-danger" style="display: none;"></span>
+        </label>
+
+        <label class="input-container">
+            <input id="password" class="input" type="password" name="Password" required />
+            <span>Password</span>
+            <span id="passwordError" class="text-danger" style="display: none;"></span>
+        </label>
+
+        <label class="input-container">
+            <input id="confirmPassword" class="input" type="password" name="ConfirmPassword" required />
+            <span>Confirm Password</span>
+            <span id="confirmPasswordError" class="text-danger" style="display: none;"></span>
+        </label>
+
+        <button type="submit" class="submit">Submit</button>
+        <p class="signin">Already have an account? <a href="@Url.Action("Login", "Account")">Signin</a></p>
+    </form>
+</main>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <style>
+        .input-container.error input {
+            border: 2px solid red;
+            background-color: #ffe6e6;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#registerForm").on("submit", function (e) {
+                e.preventDefault(); // Formun gönderilmesini engelle
+
+                const email = $("#email").val();
+                const password = $("#password").val();
+                const confirmPassword = $("#confirmPassword").val();
+
+                const emailError = $("#emailError");
+                const passwordError = $("#passwordError");
+                const confirmPasswordError = $("#confirmPasswordError");
+
+                const emailContainer = $("#email").closest('.input-container');
+                const passwordContainer = $("#password").closest('.input-container');
+                const confirmPasswordContainer = $("#confirmPassword").closest('.input-container');
+
+                // Regex for password validation
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
+                let isValid = true;
+
+                // Reset all error states
+                emailError.hide();
+                passwordError.hide();
+                confirmPasswordError.hide();
+                emailContainer.removeClass('error');
+                passwordContainer.removeClass('error');
+                confirmPasswordContainer.removeClass('error');
+
+                if (!email) {
+                    emailError.text("Email is required.");
+                    emailError.show();
+                    emailContainer.addClass('error');
+                    isValid = false;
+                }
+
+                if (!passwordRegex.test(password)) {
+                    passwordError.text("Password must be at least 8 characters long, include a number, a lowercase, and an uppercase letter.");
+                    passwordError.show();
+                    passwordContainer.addClass('error');
+                    isValid = false;
+                }
+
+                if (password !== confirmPassword) {
+                    confirmPasswordError.text("Passwords do not match.");
+                    confirmPasswordError.show();
+                    confirmPasswordContainer.addClass('error');
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    return; // Formu gönderme
+                }
+
+                // AJAX ile doğrulama
+                $.ajax({
+                    url: "@Url.Action("ValidatePassword", "Account")",
+                    type: "POST",
+                    data: {
+                        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val(),
+                        Email: email,
+                        Password: password,
+                        ConfirmPassword: confirmPassword
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert("Registration successful!");
+                            $("#registerForm")[0].submit();
+                        } else {
+                            // Backend hatası için uygun mesaj
+                            if (response.error.includes("Password")) {
+                                passwordError.text(response.error);
+                                passwordError.show();
+                                passwordContainer.addClass('error');
+                            } else {
+                                emailError.text(response.error);
+                                emailError.show();
+                                emailContainer.addClass('error');
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred. Please try again later.");
+                    }
+                });
+            });
+        });
+    </script>
+}

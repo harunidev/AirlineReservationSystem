@@ -1,0 +1,82 @@
+﻿@model ProjectFinal.Models.Flights
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Flights</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Plane_model)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Plane_model)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cities)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cities)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.peoples)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.peoples)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.F_Class)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.F_Class)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.F_Image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.F_Image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Schedule)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Schedule)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.F_Available)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.F_Available)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

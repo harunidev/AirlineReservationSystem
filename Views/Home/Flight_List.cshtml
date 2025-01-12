@@ -1,0 +1,145 @@
+﻿@model IEnumerable<ProjectFinal.Models.Flights>
+
+@{
+    ViewBag.Title = "Here Our Flight List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3 class="page-title">Here Our Flight List</h3>
+
+<div class="flight-list-container">
+    <table class="flight-list-table">
+        <thead>
+            <tr>
+                <th>Flight Details</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var car in Model)
+            {
+                <tr>
+                    <td class="flight-info">
+                        <h3>@car.Plane_model <span>@car.Cities</span></h3>
+                        <p class="flight-schedule">@car.Schedule</p>
+                        <p class="flight-status" style="color: @(car.F_Available ? "green" : "red");">
+                            @(car.F_Available ? "Flight is Ready for Booking" : "Flight is not Available")
+                        </p>
+                    </td>
+                    <td class="flight-image">
+                        <img src="@Url.Content("~/Images/Cities/" + car.F_Image)" alt="City Image" class="flight-img" />
+                    </td>
+                    <td class="flight-actions">
+                        <a href="@Url.Action("Flight_Info", "Home", new { id = car.ID })" class="btn-info">
+                            Flight Information
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    /* Global Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        color: #0056b3;
+        margin: 50px 0 30px 0;
+    }
+
+    .flight-list-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: #fff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        border-radius: 10px;
+        margin-bottom: 50px;
+    }
+
+    .flight-list-table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+        .flight-list-table thead {
+            background-color: #00c7fe;
+            color: #fff;
+        }
+
+        .flight-list-table th, .flight-list-table td {
+            padding: 20px;
+            text-align: left;
+            vertical-align: middle;
+            font-size: 1.1rem;
+        }
+
+        .flight-list-table th {
+            font-weight: bold;
+        }
+
+        .flight-list-table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+    .flight-info h3 {
+        font-size: 1.6rem;
+        color: #333;
+        margin: 0 0 10px;
+    }
+
+        .flight-info h3 span {
+            color: #00c7fe;
+        }
+
+    .flight-schedule {
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+    .flight-status {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    .flight-image img {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .flight-actions {
+        text-align: center;
+    }
+
+    .btn-info {
+        padding: 12px 20px;
+        background-color: #00c7fe;
+        color: white;
+        font-size: 1rem;
+        text-decoration: none;
+        border-radius: 25px;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-info:hover {
+            background-color: #009fd7;
+        }
+</style>
+>
+

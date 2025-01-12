@@ -1,7 +1,7 @@
 # AirlineReservationSystem
 
 This project offers the user the opportunity to book a flight ticket.
-HTML-CSS JavaScript ASP.NET MVC5 framework and LocalDB MSSQL related to this project were used in the construction of the project.
+HTML-CSS JavaScript,C# and ASP.NET MVC5 framework and LocalDB MSSQL related to this project were used in the construction of the project.
 
 The project pulls flight information from the existing part in the database. It covers CRUD operations, Data Validation and Authorization, jQuery and AJAX, Routing topics very well. The user can see the active flight information by entering the desired flight information on the login page or can make their own selection by accessing the entire flight list.
 
